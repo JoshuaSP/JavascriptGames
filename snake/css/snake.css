@@ -1,0 +1,36 @@
+.cell {
+  height: 15px;
+  width: 15px;
+  float: left;
+}
+
+.empty {
+  background-color: grey;
+}
+
+.snake {
+  background: green;
+}
+
+.apple {
+  background: red;
+}
+
+.clearfix:after{
+  clear: both;
+  display: block;
+  content: "";
+}
+
+.row {
+}
+
+.board {
+  border: double black 6px;
+  display: inline-block;
+  margin-top: 45px;
+}
+
+body {
+  text-align: center;
+}

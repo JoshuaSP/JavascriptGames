@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Our Snake</title>
+    <link rel="stylesheet" type="text/css" href="css/snake.css">
+    <script src="jquery-2.1.1.js"></script>
+  </head>
+  <body>
+
+    <div class='board clearfix'></div>
+
+    <div class="msg"></div>
+    <script src="snake.js"></script>
+    <script src="snake-view.js"></script>
+
+    <script>
+      $(new S.View(new S.Board(),$(".board")));
+    </script>
+  </body>
+</html>
