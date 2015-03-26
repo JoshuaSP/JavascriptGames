@@ -29,7 +29,6 @@
   var NUMAPPLES = 3;
   var NUTRITION = 3;
 
-
   var Board = S.Board = function(){
     this.apples = [];
     this.snake = new Snake();
@@ -45,11 +44,11 @@
       var newPos;
       do {
         newPos = new Coord([Math.floor(Math.random() * BOARDX), Math.floor(Math.random() * BOARDY)]);
-      } while (this.isOccupied(this.apples, newPos) && this.isOccupied(this.snake.segments, newPos));
+      } while (this.intersects(this.apples, newPos) || this.intersects(this.snake.segments, newPos));
       return newPos;
     },
 
-    isOccupied: function(collection, pos) {
+    intersects: function(collection, pos) {
       return collection.filter(function(el) {
         return el.eq(pos);
       }).length > 0;
@@ -79,13 +78,16 @@
       }
 
       var apples = self.apples;
+      var addedApple = null;
       apples.forEach(function(apple) {
         if (snakeHead.eq(apple)) {
           apples.splice(apples.indexOf(apple), 1);
           self.snake.growing = NUTRITION;
           self.addApples();
+          addedApple = apples[2];
         }
       });
+      return addedApple;
     },
 
     addApples: function(){
@@ -111,7 +113,7 @@
     this.dir = "N";
     this.segments = [];
     for (var i = 0; i < STARTSIZE; i++){
-      this.segments.push(START.add(new Coord([0, -i])));
+      this.segments.push(START.add(new Coord([0, i])));
     }
     this.growing = 0;
   };
@@ -126,15 +128,16 @@
       } else {
         move.tail = self.segments.pop();
       }
-      move.head = self.segments[0].add(MOVES[ DIRS.indexOf(self.dir) ])
+      move.head = self.segments[0].add(MOVES[ DIRS.indexOf(self.dir) ]);
       self.segments.unshift(move.head);
       return move;
     },
 
     changeDir: function(newDir){
-      if(Math.abs(DIRS.indexOf(newDir) - DIRS.indexOf(this.dir)) === 2){
+      //
+      if(Math.abs(DIRS.indexOf(newDir) - DIRS.indexOf(this.dir)) === 2) {
         return;
-      }else {
+      } else {
         this.dir = newDir;
       }
     }
